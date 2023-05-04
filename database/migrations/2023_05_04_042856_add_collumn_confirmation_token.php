@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function ($table) {
-            $table->string('confirmation_token')->after('password');
+            $table->string('confirmation_token')->after('password')->nullable();
         });
     }
 
