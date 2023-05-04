@@ -12,7 +12,13 @@ use Illuminate\Support\Str;
 
 class AuthService
 {
-    public function login(string $email, string $password)
+    /**
+     * @param string $email
+     * @param string $password
+     * 
+     * @return array
+     */
+    public function login(string $email, string $password): array
     {
         $login = [
             'email' => $email,
@@ -29,7 +35,15 @@ class AuthService
         ];
     }
 
-    public function register(string $firstName, string $lastName, string $email, string $password)
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $password
+     * 
+     * @return User
+     */
+    public function register(string $firstName, string $lastName, string $email, string $password): User
     {
         $user = User::where('email', $email)->exists();
         if ($user) {
@@ -51,7 +65,12 @@ class AuthService
         return $user;
     }
 
-    public function verifyEmail(string $token)
+    /**
+     * @param string $token
+     * 
+     * @return User
+     */
+    public function verifyEmail(string $token): User
     {
         $user = User::where('confirmation_token', $token)->first();
         if (!$user) {

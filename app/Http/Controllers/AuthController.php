@@ -10,16 +10,30 @@ use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 
+/**
+ * [Description AuthController]
+ */
 class AuthController extends Controller
 {
+    /**
+     * @var AuthService
+     */
     private AuthService $authService;
 
+    /**
+     * @param AuthService $authService
+     */
     public function __construct(AuthService $authService)
     {
         $this->authService = $authService;
     }
 
-    public function login(AuthLoginRequest $request)
+    /**
+     * @param AuthLoginRequest $request
+     * 
+     * @return UserResource
+     */
+    public function login(AuthLoginRequest $request): UserResource
     {
         $input = $request->validated();
 
@@ -28,7 +42,12 @@ class AuthController extends Controller
         return (new UserResource(auth()->user()))->additional($token);
     }
 
-    public function register(AuthRegisterRequest $request)
+    /**
+     * @param AuthRegisterRequest $request
+     * 
+     * @return UserResource
+     */
+    public function register(AuthRegisterRequest $request): UserResource
     {
         $input = $request->validated();
 
@@ -42,7 +61,12 @@ class AuthController extends Controller
         return new UserResource($user);
     }
 
-    public function verifyEmail(AuthVerifyEmailRequest $request)
+    /**
+     * @param AuthVerifyEmailRequest $request
+     * 
+     * @return UserResource
+     */
+    public function verifyEmail(AuthVerifyEmailRequest $request): UserResource
     {
         $input = $request->validated();
 
