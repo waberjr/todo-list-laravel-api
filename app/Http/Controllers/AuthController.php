@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthForgotPasswordRequest;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
+use App\Http\Requests\AuthResetPasswordRequest;
 use App\Http\Requests\AuthVerifyEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
@@ -86,5 +87,17 @@ class AuthController extends Controller
         $input = $request->validated();
 
         return $this->authService->forgotPassword($input['email']);
+    }
+
+    /**
+     * @param AuthResetPasswordRequest $request
+     * 
+     * @return bool
+     */
+    public function resetPassword(AuthResetPasswordRequest $request): bool
+    {
+        $input = $request->validated();
+
+        return $this->authService->resetPassword($input['email'], $input['password'], $input['token']);
     }
 }
