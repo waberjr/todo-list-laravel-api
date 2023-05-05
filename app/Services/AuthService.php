@@ -6,6 +6,7 @@ use App\Events\UserRegistered;
 use App\Exceptions\LoginInvalidException;
 use App\Exceptions\UserHasBeenTakenException;
 use App\Exceptions\VerifyEmailTokenInvalidException;
+use App\Models\PasswordResetToken;
 use App\Models\User;
 use Illuminate\Support\Str;
 
@@ -82,5 +83,22 @@ class AuthService
         $user->save();
 
         return $user;
+    }
+
+    /**
+     * @param string $email
+     * 
+     * @return bool
+     */
+    public function forgotPassword(string $email): bool
+    {
+        $user = User::where('email', $email)->firstOrFail();
+
+        PasswordResetToken::create([
+            'email' => $user->email,
+            'token' => Str::random(60)
+        ]);
+
+        return true;
     }
 }

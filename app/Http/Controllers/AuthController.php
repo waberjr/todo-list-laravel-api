@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthForgotPasswordRequest;
 use App\Http\Requests\AuthLoginRequest;
 use App\Http\Requests\AuthRegisterRequest;
 use App\Http\Requests\AuthVerifyEmailRequest;
@@ -73,5 +74,17 @@ class AuthController extends Controller
         $user = $this->authService->verifyEmail($input['token']);
 
         return new UserResource($user);
+    }
+
+    /**
+     * @param AuthForgotPasswordRequest $request
+     * 
+     * @return bool
+     */
+    public function forgotPassword(AuthForgotPasswordRequest $request): bool
+    {
+        $input = $request->validated();
+
+        return $this->authService->forgotPassword($input['email']);
     }
 }
