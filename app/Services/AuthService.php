@@ -97,6 +97,12 @@ class AuthService
         $user = User::where('email', $email)->firstOrFail();
         $token = Str::random(60);
 
+        $passwordResetToken = PasswordResetToken::where('email', $email)->first();
+        if ($passwordResetToken) {
+            event(new ForgotPassword($user, $passwordResetToken->token));
+            return true;
+        }
+
         PasswordResetToken::create([
             'email' => $user->email,
             'token' => $token
