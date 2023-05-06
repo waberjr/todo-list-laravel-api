@@ -13,7 +13,7 @@ class MeController extends Controller
     /**
      * @return UserResource
      */
-    public function me(): UserResource
+    public function index(): UserResource
     {
         return new UserResource(auth()->user());
     }
