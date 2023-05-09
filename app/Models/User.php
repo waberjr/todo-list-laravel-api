@@ -44,6 +44,9 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return [type]
+     */
     public function todos()
     {
         return $this->hasMany(Todo::class);
