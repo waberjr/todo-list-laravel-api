@@ -34,4 +34,9 @@ class TodoController extends Controller
 
         return new TodoResource($todo->fresh());
     }
+
+    public function destroy(Todo $todo)
+    {
+        $todo->delete();
+    }
 }
