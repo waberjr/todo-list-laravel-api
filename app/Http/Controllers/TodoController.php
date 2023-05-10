@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TodoStoreRequest;
+use App\Http\Requests\TodoTaskStoreResource;
 use App\Http\Requests\TodoUpdateRequest;
 use App\Http\Resources\TodoResource;
+use App\Http\Resources\TodoTaskResource;
 use Illuminate\Http\Request;
 use App\Models\Todo;
+use App\Models\TodoTask;
 
 class TodoController extends Controller
 {
@@ -44,5 +47,14 @@ class TodoController extends Controller
     public function destroy(Todo $todo)
     {
         $todo->delete();
+    }
+
+    public function addTask(Todo $todo, TodoTaskStoreResource $request)
+    {
+        $input = $request->validated();
+
+        $todoTask = $todo->tasks()->create($input);
+
+        return new TodoTaskResource($todoTask);
     }
 }
